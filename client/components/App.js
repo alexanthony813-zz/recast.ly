@@ -16,10 +16,25 @@ class App extends React.Component {
     });
   }
 
+  handleSearch(input){
+
+    var result = (data) => {
+      this.setState({
+        currentVideo : data.items[0],
+        videoList : data.items
+      })
+      console.log(data);
+    // window.videoData = data.items;
+    }
+    
+    console.log("working")
+    searchYouTube(input,result)
+  }
+
   render(){
     return (
       <div>
-        <Nav />
+        <Nav searchHandler={this.handleSearch.bind(this)} />
         <div className="col-md-7">
           <VideoPlayer item = {this.state.currentVideo} />
         </div>
@@ -28,7 +43,12 @@ class App extends React.Component {
         </div>
       </div>
     );
-  } 
+  }
+
+  //component did mount
+
+
+
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
