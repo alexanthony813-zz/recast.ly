@@ -4,8 +4,8 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      currentVideo : exampleVideoData[0],
-      videoList : exampleVideoData
+      currentVideo : null,
+      videoList : []
     };
   }
 
@@ -23,7 +23,6 @@ class App extends React.Component {
         currentVideo : data.items[0],
         videoList : data.items
       })
-      console.log(data);
     // window.videoData = data.items;
     }
     
@@ -46,8 +45,16 @@ class App extends React.Component {
   }
 
   //component did mount
+  componentDidMount(){
+    var query = "kittens"
 
-
+    searchYouTube(query, (videos) =>{
+      this.setState({
+        videos : videos,
+        currentVideo : videos[0]
+      })
+    } )
+  }
 
 }
 
