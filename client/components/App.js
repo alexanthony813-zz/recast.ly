@@ -25,11 +25,7 @@ class App extends React.Component {
     // window.videoData = data.items;
     }
     
-    var debSearchYT = _.debounce(function(){
-      return searchYouTube(input,result)
-    },10000)
-
-    debSearchYT();
+    searchYouTube(input,result);
   }
 
   componentDidMount(){
