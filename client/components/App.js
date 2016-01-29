@@ -11,13 +11,12 @@ class App extends React.Component {
 
   handleClick(video){
     this.setState({
-      currentVideo : video,
-      videoList : exampleVideoData
+      currentVideo : video
     });
   }
 
   handleSearch(input){
-
+ 
     var result = (data) => {
       this.setState({
         currentVideo : data.items[0],
@@ -26,11 +25,24 @@ class App extends React.Component {
     // window.videoData = data.items;
     }
     
-    console.log("working")
-    searchYouTube(input,result)
+    var debSearchYT = _.debounce(function(){
+      return searchYouTube(input,result)
+    },10000)
+
+    debSearchYT();
   }
 
-  render(){
+  componentDidMount(){
+    searchYouTube("kittens", (videos) =>{
+      console.log("videos : ", videos.items)
+      this.setState({
+        videoList : videos.items,
+        currentVideo : videos.items[0]
+      })
+    })
+  }
+
+  render(){ 
     return (
       <div>
         <Nav searchHandler={this.handleSearch.bind(this)} />
@@ -42,18 +54,6 @@ class App extends React.Component {
         </div>
       </div>
     );
-  }
-
-  //component did mount
-  componentDidMount(){
-    var query = "kittens"
-
-    searchYouTube(query, (videos) =>{
-      this.setState({
-        videos : videos,
-        currentVideo : videos[0]
-      })
-    } )
   }
 
 }
